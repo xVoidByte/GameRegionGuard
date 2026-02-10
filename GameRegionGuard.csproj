@@ -12,7 +12,7 @@
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 		<OutputPath>bin\$(Configuration)\GameRegionGuard\</OutputPath>
 
-		<Version>1.0.1</Version>
+		<Version>1.0.2</Version>
 		<Authors>GameRegionGuard</Authors>
 		<Product>Game Region Guard</Product>
 		<ApplicationIcon>Assets\security.ico</ApplicationIcon>
