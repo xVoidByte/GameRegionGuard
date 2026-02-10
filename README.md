@@ -1,5 +1,7 @@
 # GameRegionGuard
 
+<img width="836" height="738" alt="image" src="https://github.com/user-attachments/assets/d1af3c96-600c-4b5e-8117-ef124eadc421" />
+
 GameRegionGuard is a Windows tool that creates and removes outbound Windows Firewall rules from CIDR IP blocklists. It helps gamers reduce unwanted matchmaking and improve session quality by limiting connections to selected IP ranges, system-wide or per application.
 
 Default list used by the project:
