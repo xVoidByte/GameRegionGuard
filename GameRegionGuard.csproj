@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<UseWPF>true</UseWPF>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
+		<AssemblyName>GameRegionGuard</AssemblyName>
+		<RootNamespace>GameRegionGuard</RootNamespace>
+
+		<!-- Output folder name (instead of bin\<Config>\net8.0-windows\) -->
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<OutputPath>bin\$(Configuration)\GameRegionGuard\</OutputPath>
+
+		<Version>1.0.1</Version>
+		<Authors>GameRegionGuard</Authors>
+		<Product>Game Region Guard</Product>
+		<ApplicationIcon>Assets\security.ico</ApplicationIcon>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Resource Include="Assets\security.ico" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="HandyControl" Version="3.5.1" />
+	</ItemGroup>
+
+</Project>

@@ -1,0 +1,255 @@
+﻿<hc:Window x:Class="GameRegionGuard.MainWindow"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+           xmlns:hc="https://handyorg.github.io/handycontrol"
+           Title="Game Region Guard"
+           Height="740"
+           Width="840"
+           MinHeight="640"
+           MinWidth="740"
+           WindowStartupLocation="CenterScreen"
+           Background="{DynamicResource RegionBrush}"
+           Icon="/Assets/security.ico">
+
+    <Grid Margin="28,24,28,24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Grid Grid.Row="0" Margin="0,0,0,18">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0"
+                       Text="Game Region Guard"
+                       Foreground="{DynamicResource PrimaryTextBrush}"
+                       FontSize="24"
+                       FontWeight="Bold"/>
+
+            <Button x:Name="BtnToggleTheme"
+                    Grid.Column="1"
+                    Content="Light Theme"
+                    Click="BtnToggleTheme_Click"
+                    Width="110"
+                    Height="34"
+                    VerticalAlignment="Center"/>
+        </Grid>
+
+        <!-- Blocking Mode Card -->
+        <hc:Card Grid.Row="1"
+                 Margin="0,0,0,12">
+            <StackPanel Margin="20,16,20,16">
+
+                <TextBlock Text="Blocking Mode"
+                           Foreground="{DynamicResource PrimaryTextBrush}"
+                           FontWeight="SemiBold"
+                           FontSize="15"
+                           Margin="0,0,0,14"/>
+
+                <RadioButton x:Name="RadioSystemWide"
+                             Content="System-wide (All Applications)"
+                             GroupName="BlockingMode"
+                             IsChecked="True"
+                             Checked="OnBlockingModeChanged"
+                             HorizontalAlignment="Left"
+                             Foreground="{DynamicResource PrimaryTextBrush}"
+                             Margin="0,0,0,4"/>
+
+                <TextBlock Text="Blocks all outbound connections to Russian IP ranges for every application on this machine."
+                           Foreground="{DynamicResource SecondaryTextBrush}"
+                           FontSize="12"
+                           Margin="24,0,0,16"
+                           TextWrapping="Wrap"/>
+
+                <RadioButton x:Name="RadioSpecificApp"
+                             Content="Specific Application (CS2.exe / Deadlock.exe)"
+                             GroupName="BlockingMode"
+                             Checked="OnBlockingModeChanged"
+                             HorizontalAlignment="Left"
+                             Foreground="{DynamicResource PrimaryTextBrush}"
+                             Margin="0,0,0,4"/>
+
+                <TextBlock Text="Blocks connections only for the selected game executable, other applications are unaffected."
+                           Foreground="{DynamicResource SecondaryTextBrush}"
+                           FontSize="12"
+                           Margin="24,0,0,14"
+                           TextWrapping="Wrap"/>
+
+                <Grid x:Name="AppPathPanel" IsEnabled="False">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <hc:TextBox x:Name="TxtAppPath"
+                                Grid.Column="0"
+                                IsReadOnly="True"
+                                hc:InfoElement.Placeholder="No application selected"
+                                hc:InfoElement.Title="Application Path"
+                                Margin="0,0,10,0"/>
+
+                    <Button x:Name="BtnBrowse"
+                            Grid.Column="1"
+                            Content="Browse"
+                            Click="BtnBrowse_Click"
+                            Width="90"
+                            Height="34"
+                            VerticalAlignment="Bottom"/>
+                </Grid>
+
+            </StackPanel>
+        </hc:Card>
+
+        <!-- Progress Card -->
+        <hc:Card Grid.Row="2"
+                 Margin="0,0,0,12">
+            <StackPanel Margin="20,16,20,16">
+
+                <TextBlock Text="Progress"
+                           Foreground="{DynamicResource PrimaryTextBrush}"
+                           FontWeight="SemiBold"
+                           FontSize="15"
+                           Margin="0,0,0,12"/>
+
+                <Grid Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock x:Name="TxtProgressStatus"
+                               Grid.Column="0"
+                               Text="Ready to install"
+                               Foreground="{DynamicResource PrimaryTextBrush}"
+                               FontSize="13"/>
+
+                    <TextBlock x:Name="TxtProgressPercent"
+                               Grid.Column="1"
+                               Text="0%"
+                               Foreground="{DynamicResource PrimaryBrush}"
+                               FontSize="13"
+                               FontWeight="SemiBold"/>
+                </Grid>
+
+                <ProgressBar x:Name="ProgressBar"
+                             Height="12"
+                             Minimum="0"
+                             Maximum="100"
+                             Value="0"/>
+
+                <TextBlock x:Name="TxtEstimatedTime"
+                           Text=""
+                           Foreground="{DynamicResource SecondaryTextBrush}"
+                           FontSize="12"
+                           Margin="0,8,0,0"
+                           Visibility="Collapsed"/>
+
+            </StackPanel>
+        </hc:Card>
+
+        <!-- Status Log Card -->
+        <hc:Card Grid.Row="3">
+            <Grid Margin="20,16,20,16">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0"
+                           Text="Status Log"
+                           Foreground="{DynamicResource PrimaryTextBrush}"
+                           FontWeight="SemiBold"
+                           FontSize="15"
+                           Margin="0,0,0,10"/>
+
+                <Border Grid.Row="1"
+                        Background="{DynamicResource SecondaryRegionBrush}"
+                        CornerRadius="4">
+                    <ScrollViewer x:Name="LogScrollViewer"
+                                  VerticalScrollBarVisibility="Auto"
+                                  HorizontalScrollBarVisibility="Disabled">
+                        <TextBox x:Name="TxtLog"
+                                 IsReadOnly="True"
+                                 TextWrapping="Wrap"
+                                 FontFamily="Consolas"
+                                 FontSize="12"
+                                 Foreground="{DynamicResource PrimaryTextBrush}"
+                                 Background="Transparent"
+                                 BorderThickness="0"
+                                 Padding="12"
+                                 MinHeight="130"/>
+                    </ScrollViewer>
+                </Border>
+
+                <StackPanel Grid.Row="2"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            Margin="0,10,0,0">
+
+                    <Button x:Name="BtnCopyLogs"
+                            Content="Copy Logs"
+                            Click="BtnCopyLogs_Click"
+                            Width="100"
+                            Height="32"
+                            Margin="0,0,8,0"/>
+
+                    <Button x:Name="BtnSaveLogs"
+                            Content="Save to File"
+                            Click="BtnSaveLogs_Click"
+                            Width="100"
+                            Height="32"/>
+                </StackPanel>
+            </Grid>
+        </hc:Card>
+
+        <!-- Action Buttons -->
+        <Grid Grid.Row="4" Margin="0,14,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="BtnInstall"
+                    Grid.Column="0"
+                    Content="Install Rules"
+                    Click="BtnInstall_Click"
+                    Height="40"
+                    FontSize="14"
+                    FontWeight="SemiBold"
+                    Foreground="White"
+                    Background="{DynamicResource PrimaryBrush}"
+                    Margin="0,0,6,0"/>
+
+            <Button x:Name="BtnRemove"
+                    Grid.Column="1"
+                    Content="Remove Rules"
+                    Click="BtnRemove_Click"
+                    Height="40"
+                    FontSize="14"
+                    FontWeight="SemiBold"
+                    Foreground="White"
+                    Background="{DynamicResource DangerBrush}"
+                    Margin="6,0,6,0"/>
+
+            <Button x:Name="BtnCancel"
+                    Grid.Column="2"
+                    Content="Cancel"
+                    Click="BtnCancel_Click"
+                    Height="40"
+                    FontSize="14"
+                    FontWeight="SemiBold"
+                    IsEnabled="False"
+                    Margin="6,0,0,0"/>
+        </Grid>
+    </Grid>
+</hc:Window>
+ 
